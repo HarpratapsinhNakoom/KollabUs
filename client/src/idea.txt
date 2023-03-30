@@ -1,0 +1,25 @@
+whole page
+    - top navbar
+        --left logo
+        --center search
+        --right account
+    
+    - bottom main content
+        --left sidebar
+            ---top new option
+            ---bottom workspaces list
+        --right workspace show area
+            ---top heading section
+                ----left Workspace name
+                ----right add new folder option
+            ---bottom folder lists
+                ----grid of folders
+
+
+
+COLORS
+neon green - #41b27a
+dark green - #2c4432
+dark brown - #5c5447
+off white - #eaebe8
+mehndi green - #728c7b
