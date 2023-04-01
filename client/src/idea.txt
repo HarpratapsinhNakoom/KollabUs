@@ -1,13 +1,13 @@
 whole page
-    - top navbar
-        --left logo
-        --center search
-        --right account
+    - top navbar (OK)
+        --left logo (OK)
+        --center search (OK)
+        --right account (OK)
     
     - bottom main content
         --left sidebar
-            ---top new option
-            ---bottom workspaces list
+            ---top new option (OK)
+            ---bottom workspaces list (OK)
         --right workspace show area
             ---top heading section
                 ----left Workspace name

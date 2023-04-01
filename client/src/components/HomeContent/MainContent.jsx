@@ -8,9 +8,18 @@ const MainContent = () => {
     <Grid container
           gap={"20px"}
           m={"20px"}
-          height="100%">
+          height="calc(100% - 100px)">
           <Grid item md={2.5}><Sidebar /></Grid>
-          <Grid item md={8.5}><Worksapce /></Grid>
+          <Grid item md={8.5}
+            overflow="scroll"
+            height={"100%"}
+            sx={{
+              "::-webkit-scrollbar" :{
+                display: "none"
+              }
+            }}>
+              <Worksapce />
+          </Grid>
     </Grid>
   )
 }

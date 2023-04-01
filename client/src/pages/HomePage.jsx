@@ -7,7 +7,9 @@ const HomePage = () => {
   return (
     <Box height="100vh"
         display={"flex"}
-        flexDirection="column">
+        flexDirection="column"
+        overflow={"hidden"}
+        >
         {/* This is the whole homepage box */}
         <Navbar />
         <MainContent />
