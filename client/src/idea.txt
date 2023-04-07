@@ -15,7 +15,9 @@ whole page
             ---bottom folder lists
                 ----grid of folders
 
-
+want?
+	-change folder name based on selected in sidebar
+ 	-make and join workspaces
 
 COLORS
 neon green - #41b27a
@@ -23,3 +25,13 @@ dark green - #2c4432
 dark brown - #5c5447
 off white - #eaebe8
 mehndi green - #728c7b
+
+
+components(fo)                                              pages(fo)
+    |-----------|                                   |---------|----------|
+Navbar(fi)  HomeContent(fo)                                           HomePage(fi)
+            |---------------|---------------|                            |
+        MainContent(fi)  Sidebar(fo)    WorkSpace(fo)                   Navbar(Co)
+            |                |                |                         MainContent(Co)
+        Sidebar(Co)      Sidebar(fi)      WorkSpace(fi)
+        WorkSpace(Co)
