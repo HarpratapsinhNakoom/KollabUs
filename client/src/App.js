@@ -7,18 +7,22 @@ import ForgotPassword from './components/Authentication/ForgotPassword';
 import Profile from './components/Authentication/Profile';
 import Signup from './components/Authentication/Signup';
 import UpdateProfile from './components/Authentication/UpdateProfile';
+import ValidAuth from './components/Authentication/ValidAuth';
 
 
 function App() {
   return (
-    // <div>
-    //     <HomePage />
-    // </div>
 
     <Router> 
           <AuthProvider>
               <Routes>
-
+                
+                {/* WorkAreas */}
+                <Route exact path="/" element={
+                <PrivateRoutes>
+                  <HomePage />
+                </PrivateRoutes>
+                 }/>
 
 
                 {/* Profiles */}
@@ -35,8 +39,16 @@ function App() {
 
 
                 {/* Auth */}
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={
+                  <ValidAuth>
+                    <Signup/>
+                  </ValidAuth>
+                } />
+                <Route path="/login" element={
+                  <ValidAuth>
+                    <Login/>
+                  </ValidAuth>
+                } />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 
               </Routes>

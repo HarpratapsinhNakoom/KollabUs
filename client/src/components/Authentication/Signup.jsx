@@ -3,14 +3,17 @@ import {Form, Button, Card, Alert} from 'react-bootstrap'
 import {useAuth} from '../../context/AuthContext'
 import {Link, useNavigate} from "react-router-dom"
 import CenteredContainer from './CenteredContainer'
-
-
+import { doc, setDoc } from "firebase/firestore"; 
+import { firebase_db } from '../../firebase'
+import { v4 as uuidv4 } from 'uuid';
 
 const Signup = () => {
 
   const emailRef=useRef()
   const passwordRef=useRef()
   const passwordConfirmRef=useRef()
+  const nameRef=useRef()
+
   const {signup}=useAuth()
   const [error,setError]=useState('')
   const [loading,setLoading]=useState(false)
@@ -21,15 +24,21 @@ const Signup = () => {
     e.preventDefault();
 
     if(passwordRef.current.value !== passwordConfirmRef.current.value){
-      return setError('Password do not match')
+      return setError('Passwords do not match')
     }
 
     try{
       setError('')
       setLoading(true);
       await signup(emailRef.current.value,passwordRef.current.value)
-      navigate("/profile")
-    } catch{
+      await setDoc(doc(firebase_db, "users", uuidv4()), {
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        workspaces: []
+      });
+      navigate("/")
+    } catch(err){
+      console.log(err)
       setError('Failed to create an account')
     }
     setLoading(false)
@@ -42,6 +51,11 @@ const Signup = () => {
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
+          <Form.Group id="name">
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" ref={nameRef} required></Form.Control>
+            </Form.Group>
+
             <Form.Group id="email">
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" ref={emailRef} required></Form.Control>

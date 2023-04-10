@@ -20,24 +20,23 @@ const Login = () => {
   async function handleSubmit(e){
     e.preventDefault();
 
-   
-
     try{
       setError('')
       setLoading(true);
-      await login(emailRef.current.value,passwordRef.current.value)
-      navigate("/profile")
+      await login(emailRef.current.value,passwordRef.current.value);
+      navigate("/")
+      setLoading(false);
     } catch{
+      setLoading(false)
       setError('Failed to Log in')
     }
-    setLoading(false)
 
   }
   return (
     <CenteredContainer>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Login In</h2>
+          <h2 className="text-center mb-4">Log In</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
