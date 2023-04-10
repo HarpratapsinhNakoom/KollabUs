@@ -14,9 +14,10 @@ const Signup = () => {
   const passwordConfirmRef=useRef()
   const nameRef=useRef()
 
-  const {signup}=useAuth()
+  const {signup, currentUser}=useAuth()
   const [error,setError]=useState('')
   const [loading,setLoading]=useState(false)
+
   const navigate=useNavigate()
 
 
@@ -30,8 +31,9 @@ const Signup = () => {
     try{
       setError('')
       setLoading(true);
-      await signup(emailRef.current.value,passwordRef.current.value)
-      await setDoc(doc(firebase_db, "users", uuidv4()), {
+      const res = await signup(emailRef.current.value,passwordRef.current.value)
+      console.log(res.user.uid);
+      await setDoc(doc(firebase_db, "users", res.user.uid), {
         name: nameRef.current.value,
         email: emailRef.current.value,
         workspaces: []

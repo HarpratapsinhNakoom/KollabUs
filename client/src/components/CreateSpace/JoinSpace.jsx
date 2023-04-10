@@ -1,17 +1,60 @@
 import React from 'react'
-import { useAddContext } from '../../context/context'
+import { useLocalContext } from '../../context/context'
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { firebase_db } from '../../firebase';
+import { useAuth } from '../../context/AuthContext';
 
 const JoinSpace = () => {
-    const {joinSpace, setJoinSpace} = useAddContext();
+    const {joinSpace, setJoinSpace} = useLocalContext();
     const [roomCode, setRoomCode] = React.useState("");
-    const handleClose = () => setJoinSpace(false);
-
+    const [loading, setLoading] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+    
+    const {currentUser} = useAuth();
+    const handleClose = () => {
+        setJoinSpace(false);
+        setMessage("");
+        setRoomCode("");
+    }
     const handleRoomCode = (e) => setRoomCode(e.target.value);
 
-    const handleJoin= () => {
+    const handleJoin= async () => {
+        setLoading(true);
+        setMessage("");
+        try {
+
+            const spaceRef = doc(firebase_db, "workspaces", roomCode);
+            const spaceSnap = await getDoc(spaceRef);
+            if(spaceSnap.exists()) {
+                const userRef = doc(firebase_db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                if(userSnap.data().workspaces.includes(roomCode)) {
+                    setMessage("Looks like you are already present in the room");
+                    setLoading(false);
+                    return;
+                } else {
+                    await updateDoc(userRef, {
+                        workspaces: arrayUnion(roomCode)
+                    });
+
+                    await updateDoc(spaceRef, {
+                        users: arrayUnion(currentUser.uid)
+                    });
+                }
+            }else {
+                setMessage("Looks like the code you entered does'nt belongs to any WorkSpace");
+                setLoading(false);
+                return;
+            }
+        } catch(err) {
+            console.log("Looks like we encountered some message in creating you WorkSpace");
+            console.log(err);
+        }
+
         setRoomCode("");
         setJoinSpace(false);
+        setLoading(false);
     }
 
     const style = {
@@ -74,7 +117,10 @@ const JoinSpace = () => {
             }
         }}
         variant="outlined"
-        onClick={handleJoin}>Join Workspace</Button>
+        onClick={handleJoin}
+        disabled={loading}>Join Workspace</Button>
+
+        {message && <Typography variant='h2'>{message}</Typography>}
         </Box>
     </Modal>
   )

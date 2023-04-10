@@ -2,12 +2,12 @@ import {Box, Button, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem,
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
-import { useAddContext } from '../../../context/context';
+import { useLocalContext } from '../../../context/context';
 
 
 const Sidebar = () => {
     const {setCreateSpace,
-        setJoinSpace} = useAddContext();
+        setJoinSpace} = useLocalContext();
 
     
     const [anchorEl, setAnchorEl] = React.useState(null);
