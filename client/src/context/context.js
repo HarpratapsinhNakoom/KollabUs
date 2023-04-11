@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from "react";
 
-const AddContext = createContext();
+const LocalContext = createContext();
 
-export function useAddContext() {
-    return useContext(AddContext);
+export function useLocalContext() {
+    return useContext(LocalContext);
 }
 
 export function ContextProvider({children}) {
@@ -17,8 +17,8 @@ export function ContextProvider({children}) {
         setJoinSpace
     }
     return (
-        <AddContext.Provider value={values}>
+        <LocalContext.Provider value={values}>
             {children}
-        </AddContext.Provider>
+        </LocalContext.Provider>
     )
 }

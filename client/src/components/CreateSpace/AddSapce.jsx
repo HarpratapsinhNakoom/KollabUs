@@ -1,25 +1,56 @@
 import React from 'react'
-import { useAddContext } from '../../context/context'
+import { useLocalContext } from '../../context/context'
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"; 
+import { firebase_db } from '../../firebase';
+import { v4 as uuidv4} from 'uuid'
+import { useAuth } from '../../context/AuthContext';
 
 const AddSapce = () => {
-    const {createSpace, setCreateSpace} = useAddContext();
+    const {currentUser} = useAuth();
+    const {createSpace, setCreateSpace} = useLocalContext();
     const handleClose = () => setCreateSpace(false);
 
+    const [loading, setLoading] = React.useState(false);
     const [roomName, setRoomName] = React.useState("");
     const [roomCode, setRoomCode] = React.useState("");
+    const [desc, setDesc] = React.useState("");
 
     const handleRandomCode = () => {
-        setRoomCode("--This is a random code--");
+        setRoomCode(uuidv4());
     }
 
     const handleRoomName = (e) => setRoomName(e.target.value);
     const handleRoomCode = (e) => setRoomCode(e.target.value);
 
-    const handleCreate = () => {
+    const handleCreate = async () => {
+      setLoading(true);
+      try {
+        console.log(currentUser.uid);
+        await setDoc(doc(firebase_db, "workspaces", roomCode), {
+          name: roomName,
+          description: desc,
+          code : roomCode,
+          users: [],
+          admins: [currentUser.uid]
+        });
+
+        const userRef = doc(firebase_db, "users", currentUser.uid);
+
+        await updateDoc(userRef, {
+            workspaces: arrayUnion(roomCode)
+        });
+
+
         setRoomCode("");
         setRoomName("");
+        setDesc("");
+        setLoading(false);
         setCreateSpace(false);
+      } catch(err) {
+        setLoading(false);
+        console.log(err);
+      }
     }
 
     const style = {
@@ -71,14 +102,24 @@ const AddSapce = () => {
           value={roomCode}
           onChange={handleRoomCode}
         />
+        <Button
+        sx={{
+          m:"10px 0",
+          }}
+        variant="text"
+        onClick={handleRandomCode}>Generate Code</Button> <br />
+        <TextField
+          id="outlined-multiline-flexible"
+          label="Description"
+          multiline
+          // maxRows={4}
+          value={desc}
+          onChange={(e)=>setDesc(e.target.value)}
+          fullWidth
+        />
       </div>
 
-      <Button
-      sx={{
-        m:"10px 0",
-        }}
-      variant="text"
-      onClick={handleRandomCode}>Generate Code</Button><br />
+      <br />
 
 
       <Button
@@ -93,6 +134,7 @@ const AddSapce = () => {
         }
       }}
       variant="outlined"
+      disabled={loading}
       onClick={handleCreate}>Create Workspace</Button>
     </Box>
     </Modal>
