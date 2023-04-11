@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocalContext } from '../../context/context'
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"; 
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"; 
 import { firebase_db } from '../../firebase';
 import { v4 as uuidv4} from 'uuid'
 import { useAuth } from '../../context/AuthContext';
