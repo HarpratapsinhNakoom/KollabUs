@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 // import bgSvg from '../../../assets/images/headerbg.svg'
 // import bgJgep from '../../../assets/images/header2.jpg'
 
-const Worksapce = () => {
+const Worksapce = (props) => {
     const headerBox = {
         margin:"20px 10px",
         minHeight:"300px",
@@ -39,49 +39,57 @@ const Worksapce = () => {
         margin:"20px 10px 40px 10px"
     };
   return (
-    <Box
-        height="100%">
-        <Box style={headerBox}>
-            <Box style={spaceHeading}>
-                <Typography
-                    variant="h2"
-                    color={"Tomato"}
-                    fontWeight="medium"
-                    letterSpacing={"1px"}
-                >Google Developers</Typography>
+    <>
+        {props.space.code ?
+            <Box
+            height="100%">
+            <Box style={headerBox}>
+                <Box style={spaceHeading}>
+                    <Typography
+                        variant="h2"
+                        color={"Tomato"}
+                        fontWeight="medium"
+                        letterSpacing={"1px"}
+                    >
+                        {props.space.name}
+                    </Typography>
+                </Box>
+                <Box style={subHeader}>
+                    <Box style={spaceDescription}>
+                        CODE : {props.space.code}
+                    </Box>
+                    <Box style={newButton}>
+                        <Button sx={{
+                        backgroundColor:"#41b27a",
+                        "&:hover" :{
+                            opacity:"0.8",
+                            backgroundColor: "#41b27a"
+                        }
+                    }}
+                    variant="contained" startIcon={<AddIcon />}>
+                        New Folder
+                    </Button>
+                    </Box>
+                </Box>
             </Box>
-            <Box style={subHeader}>
-                <Box style={spaceDescription}>
-                    CODE : 120120
-                </Box>
-                <Box style={newButton}>
-                    <Button sx={{
-                    backgroundColor:"#41b27a",
-                    "&:hover" :{
-                        opacity:"0.8",
-                        backgroundColor: "#41b27a"
-                    }
-                }}
-                variant="contained" startIcon={<AddIcon />}>
-                    New Folder
-                </Button>
-                </Box>
+            <Box style={folderSection}>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Typography variant='h1' color="#2c4432">Folders</Typography>
             </Box>
         </Box>
-        <Box style={folderSection}>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-            <Typography variant='h1' color="#2c4432">Folders</Typography>
-        </Box>
-    </Box>
+        :
+        <h1>Select a space</h1>
+    }
+    </>
   )
 }
 

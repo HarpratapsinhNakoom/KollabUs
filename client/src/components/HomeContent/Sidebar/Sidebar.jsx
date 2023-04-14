@@ -3,46 +3,9 @@ import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useLocalContext } from '../../../context/context';
-import { doc, getDoc } from 'firebase/firestore';
-import { firebase_db } from '../../../firebase';
-import { useAuth } from '../../../context/AuthContext';
 
-
-const Sidebar = () => {
+const Sidebar = (props) => {
     
-    const [workspaces, setWorkspaces] = React.useState([]);
-    const {currentUser} = useAuth();
-    React.useEffect(() => {
-        
-        async function getData() {
-            try{
-                const userRef = doc(firebase_db, "users", currentUser.uid);
-                const userSnap = await getDoc(userRef);
-                
-                const workspaceids = userSnap.data().workspaces;
-                const t = [];
-                for (let index = 0; index < workspaceids.length; index++) {
-                    const ele = (await getDoc(doc(firebase_db, "workspaces", workspaceids[index]))).data().name;
-                    t.push(ele);
-                }
-
-                setWorkspaces(t);
-                // setWorkspaces(
-                //     workspaceids.map( (spaceId) => {
-                //         const spaceRef = doc(firebase_db, "workspaces", spaceId);
-                //         const spaceSnap = getDoc(spaceRef);
-
-                //         return spaceSnap.data().name;
-                //     })
-                // )
-                // setWorkspaces()
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        getData();
-    }, []);
     const {setCreateSpace,
         setJoinSpace} = useLocalContext();
 
@@ -84,7 +47,7 @@ const Sidebar = () => {
       </Menu>
     );
 
-    const showWorkspaces = workspaces.map((space, index) => {
+    const showWorkspaces = props.workspaces.map((space, index) => {
         return (
             <ListItem key={index}
             sx={{
@@ -94,7 +57,9 @@ const Sidebar = () => {
                     cursor:"pointer",
                     backgroundColor:"whitesmoke"
                 }
-            }}>
+            }}
+            onClick={() => props.setSelectedSpace(space)}
+            >
                 <ListItemIcon sx={{
                     minWidth:"35px"
                 }}>
@@ -104,7 +69,7 @@ const Sidebar = () => {
                     primaryTypographyProps={{
                         fontSize:"15px"
                     }}
-                    primary={space}
+                    primary={space.name}
                 />
             </ListItem>
         );
