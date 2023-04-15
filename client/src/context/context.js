@@ -11,6 +11,7 @@ export function ContextProvider({children}) {
     const [joinSpace, setJoinSpace] = React.useState(false);
     const [createFolder, setCreateFolder] = React.useState(false);
     const [selectedSpace, setSelectedSpace] = React.useState({});
+    const [currentRootFolder, setCurrentRootFolder] = React.useState("");
 
     const values = {
         createSpace,
@@ -20,7 +21,9 @@ export function ContextProvider({children}) {
         createFolder,
         setCreateFolder,
         selectedSpace,
-        setSelectedSpace
+        setSelectedSpace,
+        currentRootFolder,
+        setCurrentRootFolder
     }
     return (
         <LocalContext.Provider value={values}>

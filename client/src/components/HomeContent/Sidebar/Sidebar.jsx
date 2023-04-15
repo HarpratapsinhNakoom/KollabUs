@@ -8,7 +8,8 @@ const Sidebar = (props) => {
     
     const {setCreateSpace,
         setJoinSpace,
-        setSelectedSpace} = useLocalContext();
+        setSelectedSpace,
+        setCurrentRootFolder} = useLocalContext();
 
     
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -59,7 +60,10 @@ const Sidebar = (props) => {
                     backgroundColor:"whitesmoke"
                 }
             }}
-            onClick={() => setSelectedSpace(space)}
+            onClick={() => {
+                setSelectedSpace(space)
+                setCurrentRootFolder(space.rootFolderId)
+            }}
             >
                 <ListItemIcon sx={{
                     minWidth:"35px"

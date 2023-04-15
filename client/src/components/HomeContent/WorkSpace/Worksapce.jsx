@@ -1,12 +1,17 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import AddFolder from './AddFolderButton';
 import { useLocalContext } from '../../../context/context';
+import { useFolder } from '../../../hooks/useFolder';
 // import bgSvg from '../../../assets/images/headerbg.svg'
 // import bgJgep from '../../../assets/images/header2.jpg'
+import CreateFolder from '../../Modals/CreateFolder'
+import FolderItem from './FolderItem';
 
 const Worksapce = () => {
-    const {selectedSpace} = useLocalContext()
+    const {selectedSpace, currentRootFolder} = useLocalContext()
+    const {folder, childFolders} = useFolder(currentRootFolder);
+
     const headerBox = {
         margin:"20px 10px",
         minHeight:"300px",
@@ -66,18 +71,15 @@ const Worksapce = () => {
                 </Box>
             </Box>
             <Box style={folderSection}>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
-                <Typography variant='h1' color="#2c4432">Folders</Typography>
+                <Grid container spacing={3}>
+                {childFolders.length > 0 && 
+                        childFolders.map((childFolder, index) => {
+                            return (<FolderItem key={index} folder={childFolder}/>)
+                        })
+                }    
+                </Grid>                
             </Box>
+            <CreateFolder currentFolder={folder}/>
         </Box>
         :
         <h1>Select a space</h1>

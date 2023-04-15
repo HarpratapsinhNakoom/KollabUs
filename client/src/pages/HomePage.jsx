@@ -4,11 +4,9 @@ import Navbar from '../components/Navbar'
 import MainContent from '../components/HomeContent/MainContent'
 import AddSapce from '../components/Modals/AddSapce'
 import JoinSpace from '../components/Modals/JoinSpace'
-import CreateFolder from '../components/Modals/CreateFolder'
-import { useFolder } from '../hooks/useFolder'
 
 const HomePage = () => {
-  const {folder} = useFolder("v8xDP72wj89ReDQKufSY");
+  
   return (
     <Box height="100vh"
         display={"flex"}
@@ -20,7 +18,6 @@ const HomePage = () => {
         <MainContent />
         <AddSapce />
         <JoinSpace />
-        <CreateFolder currentFolder={folder}/>
     </Box>
   )
 }
