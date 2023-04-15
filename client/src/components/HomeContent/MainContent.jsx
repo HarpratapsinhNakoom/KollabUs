@@ -6,10 +6,9 @@ import { doc, getDoc } from 'firebase/firestore';
 import { firebase_db } from '../../firebase';
 import { useAuth } from '../../context/AuthContext';
 
-
 const MainContent = () => {
   const [workspaces, setWorkspaces] = React.useState([{}]);
-  const [selectedSpace, setSelectedSpace] = React.useState({});
+
     const {currentUser} = useAuth();
     React.useEffect(() => {
         
@@ -48,8 +47,7 @@ const MainContent = () => {
           m={"20px"}
           height="calc(100% - 100px)">
           <Grid item md={2.5}>
-              <Sidebar workspaces={workspaces}
-              setSelectedSpace={setSelectedSpace}/>
+              <Sidebar workspaces={workspaces}/>
           </Grid>
           <Grid item md={8.5}
             overflow="scroll"
@@ -59,7 +57,7 @@ const MainContent = () => {
                 display: "none"
               }
             }}>
-              <Worksapce space={selectedSpace}/>
+              <Worksapce />
           </Grid>
     </Grid>
   )

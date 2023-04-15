@@ -1,10 +1,12 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add';
+import AddFolder from './AddFolderButton';
+import { useLocalContext } from '../../../context/context';
 // import bgSvg from '../../../assets/images/headerbg.svg'
 // import bgJgep from '../../../assets/images/header2.jpg'
 
-const Worksapce = (props) => {
+const Worksapce = () => {
+    const {selectedSpace} = useLocalContext()
     const headerBox = {
         margin:"20px 10px",
         minHeight:"300px",
@@ -40,7 +42,7 @@ const Worksapce = (props) => {
     };
   return (
     <>
-        {props.space.code ?
+        {selectedSpace.code ?
             <Box
             height="100%">
             <Box style={headerBox}>
@@ -51,24 +53,15 @@ const Worksapce = (props) => {
                         fontWeight="medium"
                         letterSpacing={"1px"}
                     >
-                        {props.space.name}
+                        {selectedSpace.name}
                     </Typography>
                 </Box>
                 <Box style={subHeader}>
                     <Box style={spaceDescription}>
-                        CODE : {props.space.code}
+                        CODE : {selectedSpace.code}
                     </Box>
                     <Box style={newButton}>
-                        <Button sx={{
-                        backgroundColor:"#41b27a",
-                        "&:hover" :{
-                            opacity:"0.8",
-                            backgroundColor: "#41b27a"
-                        }
-                    }}
-                    variant="contained" startIcon={<AddIcon />}>
-                        New Folder
-                    </Button>
+                        <AddFolder/>
                     </Box>
                 </Box>
             </Box>

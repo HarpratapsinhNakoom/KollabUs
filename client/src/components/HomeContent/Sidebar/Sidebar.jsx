@@ -7,7 +7,8 @@ import { useLocalContext } from '../../../context/context';
 const Sidebar = (props) => {
     
     const {setCreateSpace,
-        setJoinSpace} = useLocalContext();
+        setJoinSpace,
+        setSelectedSpace} = useLocalContext();
 
     
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,7 +59,7 @@ const Sidebar = (props) => {
                     backgroundColor:"whitesmoke"
                 }
             }}
-            onClick={() => props.setSelectedSpace(space)}
+            onClick={() => setSelectedSpace(space)}
             >
                 <ListItemIcon sx={{
                     minWidth:"35px"
