@@ -1,6 +1,7 @@
 import React,{useContext,useState,useEffect} from 'react'
 import {auth} from '../firebase';
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { useLocalContext } from './context';
 
 const AuthContext=React.createContext();
 
@@ -11,6 +12,7 @@ export function useAuth(){
 export function AuthProvider ({children}){
     const [currentUser,setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true)
+    const { setSelectedSpace, setCurrentRootFolder } = useLocalContext();
 
     function signup(email,password){
         return createUserWithEmailAndPassword(auth, email,password)
@@ -23,6 +25,8 @@ export function AuthProvider ({children}){
     function logout(){
         signOut(auth).then(() => {
             setCurrentUser(null);
+            setCurrentRootFolder("");
+            setSelectedSpace({});
         })
     }
 

@@ -13,6 +13,7 @@ export function ContextProvider({children}) {
     const [selectedSpace, setSelectedSpace] = React.useState({});
     const [currentRootFolder, setCurrentRootFolder] = React.useState("");
 
+    
     const values = {
         createSpace,
         setCreateSpace,

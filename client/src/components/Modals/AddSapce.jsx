@@ -41,7 +41,7 @@ const AddSapce = () => {
           name: roomName + " root folder",  //name for folder stored in db
           parentId: null,     // id of its parent folder
           userId: currentUser.uid,   //who created this folder
-          // path: ,    //path of folders till this folder
+          path: [],    //path of folders till this folder
           createdAt:getCurrentTimeStamp  //time when it was created
         });
 

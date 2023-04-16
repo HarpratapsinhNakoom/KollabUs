@@ -7,11 +7,14 @@ import { useFolder } from '../../../hooks/useFolder';
 // import bgJgep from '../../../assets/images/header2.jpg'
 import CreateFolder from '../../Modals/CreateFolder'
 import FolderItem from './FolderItem';
+import FolderBreadcrumbs from './FolderBreadcrumbs';
+import { useLocation, useParams } from 'react-router-dom';
 
 const Worksapce = () => {
+    const {folderId} = useParams();
     const {selectedSpace, currentRootFolder} = useLocalContext()
-    const {folder, childFolders} = useFolder(currentRootFolder);
-
+    const {state = {}} = useLocation()
+    const {folder, childFolders} = useFolder(folderId? folderId : currentRootFolder,state?  state.folder : null);
     const headerBox = {
         margin:"20px 10px",
         minHeight:"300px",
@@ -71,6 +74,7 @@ const Worksapce = () => {
                 </Box>
             </Box>
             <Box style={folderSection}>
+                <FolderBreadcrumbs currentFolder={folder}/>
                 <Grid container spacing={3}>
                 {childFolders.length > 0 && 
                         childFolders.map((childFolder, index) => {

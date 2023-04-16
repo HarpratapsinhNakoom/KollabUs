@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 const AddSapce = ({currentFolder}) => {
     // console.log(currentFolder);
     const {currentUser} = useAuth();
-    const {createFolder, setCreateFolder} = useLocalContext();
+    const {createFolder, setCreateFolder, currentRootFolder} = useLocalContext();
     const handleClose = () => setCreateFolder(false);
 
     const [loading, setLoading] = React.useState(false);
@@ -24,13 +24,21 @@ const AddSapce = ({currentFolder}) => {
         return;
       }
       setLoading(true);
+
+      const current_Folder_Path = [...currentFolder.path]
+      if(currentFolder.id !== currentRootFolder) {
+        current_Folder_Path.push({
+          name: currentFolder.name,
+          id: currentFolder.id
+        })
+      }
       try {
         // console.log(currentUser.uid);
         await addDoc(collection(firebase_db, "folders"), {
           name: folderName,  //name for folder stored in db
           parentId: currentFolder.id,     // id of its parent folder
           userId: currentUser.uid,   //who created this folder
-          // path: ,    //path of folders till this folder
+          path: current_Folder_Path,    //path of folders till this folder
           createdAt:getCurrentTimeStamp  //time when it was created
         });
 

@@ -53,13 +53,12 @@ export function useFolder(folderId = null, folder = null) {
     }, [folderId, folder])
 
     useEffect(()=>{
-        // console.log("har");
         async function doUpdateFolder() {
-            if(folderId == null) {
+            if(folderId === currentRootFolder) {
                 return dispatch({
                     type: ACTIONS.UPDATE_FOLDER,
                     payload: {folder: {
-                        name : "Root",
+                        name : "Home",
                         id: currentRootFolder,
                         path: []
                     }}
@@ -77,7 +76,7 @@ export function useFolder(folderId = null, folder = null) {
                     dispatch({
                         type: ACTIONS.UPDATE_FOLDER,
                         payload: {folder: {
-                            name : "Root",
+                            name : "Home",
                             id: currentRootFolder,
                             path: []
                         }}

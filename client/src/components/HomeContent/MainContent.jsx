@@ -18,6 +18,7 @@ const MainContent = () => {
                 const userSnap = await getDoc(userRef);
                 
                 const workspaceids = userSnap.data().workspaces;
+                
                 const t = [];
                 for (let index = 0; index < workspaceids.length; index++) {
                     const ele = (await getDoc(doc(firebase_db, "workspaces", workspaceids[index]))).data();

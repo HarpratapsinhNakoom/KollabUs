@@ -3,14 +3,17 @@ import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useLocalContext } from '../../../context/context';
+import {useNavigate} from 'react-router-dom'
+import { useFolder } from '../../../hooks/useFolder';
 
 const Sidebar = (props) => {
-    
+    const navigate = useNavigate();
     const {setCreateSpace,
         setJoinSpace,
         setSelectedSpace,
         setCurrentRootFolder} = useLocalContext();
-
+    
+    console.log(props.workspaces);
     
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -51,32 +54,38 @@ const Sidebar = (props) => {
 
     const showWorkspaces = props.workspaces.map((space, index) => {
         return (
-            <ListItem key={index}
-            sx={{
-                borderBottom:"1px solid black",
-                "&:hover":{
-                    borderRadius:"5px",
-                    cursor:"pointer",
-                    backgroundColor:"whitesmoke"
-                }
-            }}
-            onClick={() => {
-                setSelectedSpace(space)
-                setCurrentRootFolder(space.rootFolderId)
-            }}
-            >
-                <ListItemIcon sx={{
-                    minWidth:"35px"
-                }}>
-                    <WorkspacesIcon />
-                </ListItemIcon>
-                <ListItemText
-                    primaryTypographyProps={{
-                        fontSize:"15px"
+            <>
+                {
+                    space &&
+                    <ListItem key={index}
+                    sx={{
+                        borderBottom:"1px solid black",
+                        "&:hover":{
+                            borderRadius:"5px",
+                            cursor:"pointer",
+                            backgroundColor:"whitesmoke"
+                        }
                     }}
-                    primary={space.name}
-                />
-            </ListItem>
+                    onClick={() => {
+                        setSelectedSpace(space)
+                        setCurrentRootFolder(space.rootFolderId)
+                        navigate(`/${space.code}`)
+                    }}
+                    >
+                        <ListItemIcon sx={{
+                            minWidth:"35px"
+                        }}>
+                            <WorkspacesIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primaryTypographyProps={{
+                                fontSize:"15px"
+                            }}
+                            primary={space.name}
+                        />
+                    </ListItem>
+                }
+            </>
         );
     })
 
@@ -106,7 +115,7 @@ const Sidebar = (props) => {
             m={"32px 0"}>
             <Typography variant='h5'>My Workspaces</Typography>
             <List >
-              {showWorkspaces}
+              {props.workspaces.length > 0 && showWorkspaces}
             </List>
         </Box>
         {renderMenu}

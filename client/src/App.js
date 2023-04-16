@@ -22,8 +22,19 @@ function App() {
                 <PrivateRoutes>
                   <HomePage />
                 </PrivateRoutes>
+                }/>
+
+                <Route path="/:spaceId" element={
+                  <PrivateRoutes>
+                    <HomePage />
+                  </PrivateRoutes>
                  }/>
 
+                <Route path="/:spaceId/folders/:folderId" element={
+                  <PrivateRoutes>
+                    <HomePage />
+                  </PrivateRoutes>
+                 }/>
 
                 {/* Profiles */}
                 <Route  path="/profile" element={
