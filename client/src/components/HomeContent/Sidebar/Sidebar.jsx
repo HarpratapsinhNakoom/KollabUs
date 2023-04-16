@@ -13,8 +13,6 @@ const Sidebar = (props) => {
         setSelectedSpace,
         setCurrentRootFolder} = useLocalContext();
     
-    console.log(props.workspaces);
-    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const handleAddOption = (event) => {
@@ -54,10 +52,10 @@ const Sidebar = (props) => {
 
     const showWorkspaces = props.workspaces.map((space, index) => {
         return (
-            <>
+            <div key={index}>
                 {
                     space &&
-                    <ListItem key={index}
+                    <ListItem 
                     sx={{
                         borderBottom:"1px solid black",
                         "&:hover":{
@@ -85,7 +83,7 @@ const Sidebar = (props) => {
                         />
                     </ListItem>
                 }
-            </>
+            </div>
         );
     })
 

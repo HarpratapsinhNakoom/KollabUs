@@ -44,3 +44,13 @@ test-har
 test-har
 
 f4812c31-ef43-4a51-9fb2-43a11cecd35d
+
+rules
+function authed() {
+      		return request.auth != null
+      }
+      
+      function matchesUser(data) {
+      		return request.auth.uid == data.userId
+      }
+      allow read: if authed() && matchesUser(resource.data)
