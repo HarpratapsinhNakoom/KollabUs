@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocalContext } from '../../context/context'
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"; 
-import { firebase_db } from '../../firebase';
+import { firebase_db, getCurrentTimeStamp } from '../../firebase';
 import { v4 as uuidv4} from 'uuid'
 import { useAuth } from '../../context/AuthContext';
 
@@ -27,13 +27,24 @@ const AddSapce = () => {
       setLoading(true);
       try {
         console.log(currentUser.uid);
+        const rootFolderId = uuidv4();
         await setDoc(doc(firebase_db, "workspaces", roomCode), {
           name: roomName,
           description: desc,
           code : roomCode,
           users: [],
-          admins: [currentUser.uid]
+          admins: [currentUser.uid],
+          rootFolderId: rootFolderId
         });
+
+        await setDoc(doc(firebase_db, "folders", rootFolderId), {
+          name: roomName + " root folder",  //name for folder stored in db
+          parentId: null,     // id of its parent folder
+          userId: currentUser.uid,   //who created this folder
+          path: [],    //path of folders till this folder
+          createdAt:getCurrentTimeStamp  //time when it was created
+        });
+
 
         const userRef = doc(firebase_db, "users", currentUser.uid);
 

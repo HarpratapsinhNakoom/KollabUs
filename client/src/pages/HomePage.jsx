@@ -2,10 +2,11 @@ import React from 'react'
 import {Box} from '@mui/material'
 import Navbar from '../components/Navbar'
 import MainContent from '../components/HomeContent/MainContent'
-import AddSapce from '../components/CreateSpace/AddSapce'
-import JoinSpace from '../components/CreateSpace/JoinSpace'
+import AddSapce from '../components/Modals/AddSapce'
+import JoinSpace from '../components/Modals/JoinSpace'
 
 const HomePage = () => {
+  
   return (
     <Box height="100vh"
         display={"flex"}
