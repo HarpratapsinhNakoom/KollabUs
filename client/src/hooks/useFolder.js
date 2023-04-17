@@ -97,7 +97,7 @@ export function useFolder(folderId = null, folder = null) {
             dispatch({
                 type: ACTIONS.SET_CHILD_FOLDER,
                 payload: {
-                    childFolders: querySnapshot.docs.map(formattedDoc)
+                    childFolders: querySnapshot.docs.map(formattedDoc),
                 }
             })
         });
