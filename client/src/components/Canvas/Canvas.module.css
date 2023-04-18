@@ -1,0 +1,79 @@
+.drawArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    width: 1000px;
+    height: 500px;
+}
+
+.customCanvas {
+    background-color: #272727;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 1000px;
+    height: 500px;
+}
+
+.btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.colorBox {
+    display: flex;
+    justify-content: space-around;
+    /* margin: 0 60px; */
+    width: 200px;
+    /* margin-bottom: 20px; */
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.skeleton 
+{
+    opacity: .7;
+    animation: skeleton-loading 1s linear infinite alternate;
+    z-index: 10;
+}
+  
+@keyframes skeleton-loading 
+{
+    0% 
+    {
+        background-color: hsl(200, 20%, 70%);
+    }
+
+    100% 
+    {
+        background-color: hsl(200, 20%, 95%);
+    }
+}
+
+.boardWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+    height: 100vh;
+}
+
+.deleteButton {
+    /* background-color: #ffffff; */
+    display: flex;
+    align-items: center;
+    background: none;
+    margin: -1px -6px;
+    /* margin-left: ; */
+}
+
+.deleteButtonImage {
+    height: 30px;
+    width: 30px;
+}

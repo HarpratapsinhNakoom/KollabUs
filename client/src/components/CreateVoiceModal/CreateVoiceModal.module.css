@@ -1,0 +1,76 @@
+.modalMask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.modalBody {
+    width: 40%;
+    max-width: 500px;
+    background: #313338;
+    border-radius: 15px;
+    position: relative;
+}
+
+.modalHeader {
+    padding: 20px;
+    font-size: 16px;
+}
+
+.heading {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.modalFooter {
+    /* padding: 30px; */
+    background-color: #2b2d31;
+    text-align: center;
+    padding: 15px;
+    border-radius: 0px 0px 15px 15px;
+}
+
+.footerButton {
+    background: #5865f2;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    /* width: 130px; */
+    justify-content: center;
+    padding: 7px 10px;
+    border-radius: 5px;
+    margin: 0 auto;
+    transition: all 0.2s ease-in-out;
+    font-weight: 100;
+    /* margin-bottom: 10px; */
+}
+
+.footerButton:hover {
+    background: #4752c4;
+}
+
+.footerButton span {
+    font-size: 14px;
+    /* margin-left: 5px; */
+    /* font-weight: bold; */
+}
+
+.closeButton {
+    position: absolute;
+    right: 3px;
+    top: 8px;
+    background: none;
+}
+
+.footerImage {
+    width: 20px;
+    height: 20px;
+}
