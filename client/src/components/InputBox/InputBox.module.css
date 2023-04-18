@@ -1,0 +1,25 @@
+.input {
+    background: #1e1f22;
+    border: none;
+    padding: 10px 10px;
+    width: 100px;
+    color: #828692;
+    font-size: 16px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.inputImage {
+    /* position: absolute; */
+    width: 20px;
+    height: 20px;
+}
+
+.inputCover {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #1e1f22;
+    padding: 0px 10px;
+    
+}
