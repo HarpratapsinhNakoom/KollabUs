@@ -11,7 +11,9 @@ const Sidebar = (props) => {
     const {setCreateSpace,
         setJoinSpace,
         setSelectedSpace,
-        setCurrentRootFolder} = useLocalContext();
+        setCurrentRootFolder,
+        setCurrentVoiceChannels,
+        setVoiceChannelsCount} = useLocalContext();
     
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -68,6 +70,8 @@ const Sidebar = (props) => {
                         setSelectedSpace(space)
                         setCurrentRootFolder(space.rootFolderId)
                         navigate(`/${space.code}`)
+                        setCurrentVoiceChannels([]);
+                        setVoiceChannelsCount(0);
                     }}
                     >
                         <ListItemIcon sx={{
