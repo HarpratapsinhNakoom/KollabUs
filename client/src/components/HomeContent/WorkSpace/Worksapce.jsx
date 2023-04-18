@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import AddFolder from './AddFolderButton';
 import { useLocalContext } from '../../../context/context';
@@ -9,12 +9,26 @@ import CreateFolder from '../../Modals/CreateFolder'
 import FolderItem from './FolderItem';
 import FolderBreadcrumbs from './FolderBreadcrumbs';
 import { useLocation, useParams } from 'react-router-dom';
+import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
+import Sidebar from '../../Sidebar/Sidebar';
+import sidebarStyles from '../../Sidebar/Sidebar.module.css'
+import { useAuth } from '../../../context/AuthContext';
 
 const Worksapce = () => {
     const {folderId} = useParams();
     const {selectedSpace, currentRootFolder} = useLocalContext()
+    const {currentUser} = useAuth()
     const {state = {}} = useLocation()
     const {folder, childFolders} = useFolder(folderId? folderId : currentRootFolder,state?  state.folder : null);
+    
+    function showSidebar() {
+        const element = document.getElementById("mySidebar");
+        element.classList.remove(sidebarStyles.hideSidebar);
+        const mask = document.getElementById("myMask");
+        // console.log(mask);
+        mask.classList.add(sidebarStyles.modalMask);
+    }
+
     const headerBox = {
         margin:"20px 10px",
         minHeight:"300px",
@@ -74,6 +88,9 @@ const Worksapce = () => {
                 </Box>
             </Box>
             <Box style={folderSection}>
+                <Button variant="outlined" onClick={showSidebar}>
+                    <KeyboardVoiceOutlinedIcon />
+                </Button>
                 <FolderBreadcrumbs currentFolder={folder}/>
                 <Grid container spacing={3}>
                 {childFolders.length > 0 && 
@@ -84,6 +101,7 @@ const Worksapce = () => {
                 </Grid>                
             </Box>
             <CreateFolder currentFolder={folder}/>
+            <Sidebar user={currentUser} />
         </Box>
         :
         <h1>Select a space</h1>

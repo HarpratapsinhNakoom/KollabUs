@@ -27,17 +27,18 @@ const AddSapce = () => {
       setLoading(true);
       try {
         const rootFolderId = uuidv4();
-        // const defaultVoiceChannel = {
-        //   channelId : uuidv4(),
-        //   channelName : "General"
-        // }
+        const defaultVoiceChannel = {
+          channelId : uuidv4(),
+          channelName : "General"
+        }
         await setDoc(doc(firebase_db, "workspaces", roomCode), {
           name: roomName,
           description: desc,
           code : roomCode,
           users: [],
           admins: [currentUser.uid],
-          rootFolderId: rootFolderId
+          rootFolderId: rootFolderId,
+          voiceChannels: [defaultVoiceChannel]
         });
 
         await setDoc(doc(firebase_db, "folders", rootFolderId), {

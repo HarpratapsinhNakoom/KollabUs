@@ -2,27 +2,53 @@ import React, { useEffect, useState } from "react";
 import styles from "./Sidebar.module.css";
 import CreateVoiceModal from "../CreateVoiceModal/CreateVoiceModal";
 import Channel from "../Channel/Channel";
-const workspaceName = "Physics";
+import { useLocalContext } from "../../context/context";
+import { doc, getDoc } from "firebase/firestore";
+import { firebase_db } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 const isCreator = true;
 
-const voiceChannels = [
-  { channelId: "123", channelName: "Proton" },
-  { channelId: "234", channelName: "Neutron" },
-  { channelId: "345", channelName: "Atom" },
-  { channelId: "456", channelName: "Electron" },
-  { channelId: "567", channelName: "Positron" },
-  { channelId: "678", channelName: "Nucleus" },
-  { channelId: "111", channelName: "Gravity" },
-  { channelId: "222", channelName: "Rotation" },
-  { channelId: "333", channelName: "Equilibrium" },
-  { channelId: "444", channelName: "Oscillate" },
-  { channelId: "555", channelName: "Magnetic" },
-  { channelId: "666", channelName: "Particles" },
-];
+// const voiceChannels = [
+//   { channelId: "123", channelName: "Proton" },
+//   { channelId: "234", channelName: "Neutron" },
+//   { channelId: "345", channelName: "Atom" },
+//   { channelId: "456", channelName: "Electron" },
+//   { channelId: "567", channelName: "Positron" },
+//   { channelId: "678", channelName: "Nucleus" },
+//   { channelId: "111", channelName: "Gravity" },
+//   { channelId: "222", channelName: "Rotation" },
+//   { channelId: "333", channelName: "Equilibrium" },
+//   { channelId: "444", channelName: "Oscillate" },
+//   { channelId: "555", channelName: "Magnetic" },
+//   { channelId: "666", channelName: "Particles" },
+// ];
 
 const Sidebar = ({ user }) => {
+  const {selectedSpace,
+    currentVoiceChannels,
+    setCurrentVoiceChannels,
+    voiceChannelsCount} = useLocalContext();
+  const {currentUser} = useAuth();
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [createModalOpen, setCreateModalOpen] = useState(false);
+
+
+  useEffect(() => {
+    
+    async function getChannels() {
+        try{
+            const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
+            const spaceSnap = await getDoc(spaceRef);
+            
+            setCurrentVoiceChannels(spaceSnap.data().voiceChannels);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+  
+    getChannels();
+  }, [currentUser, voiceChannelsCount, selectedSpace]);
+
 
   function onClose() {
     setCreateModalOpen(false);
@@ -63,7 +89,7 @@ const Sidebar = ({ user }) => {
               alt=""
             />
           </button>
-          <span className={styles.sidebarHeader}>{workspaceName}</span>
+          <span className={styles.sidebarHeader}>{selectedSpace.name}</span>
         </div>
         <div className={styles.sidebarContentWrapper}>
           <div className={styles.voicesWrapper}>
@@ -80,7 +106,7 @@ const Sidebar = ({ user }) => {
               )}
             </h2>
             <div className={styles.allChannels}>
-              {voiceChannels.map((channel) => {
+              {currentVoiceChannels.map((channel) => {
                 return (
                   <div key={channel.channelId} className={styles.channelCover}>
                     <div className={styles.channelItem}>

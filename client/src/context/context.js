@@ -13,7 +13,9 @@ export function ContextProvider({children}) {
     const [selectedSpace, setSelectedSpace] = React.useState({});
     const [currentRootFolder, setCurrentRootFolder] = React.useState("");
     const [workSpaceCount, setWorkSpaceCount] = React.useState(0);
-    
+    const [currentVoiceChannels, setCurrentVoiceChannels] = React.useState([]);
+    const [voiceChannelsCount, setVoiceChannelsCount] = React.useState(0);
+
     const values = {
         createSpace,
         setCreateSpace,
@@ -26,7 +28,11 @@ export function ContextProvider({children}) {
         currentRootFolder,
         setCurrentRootFolder,
         workSpaceCount,
-        setWorkSpaceCount
+        setWorkSpaceCount,
+        currentVoiceChannels,
+        setCurrentVoiceChannels,
+        voiceChannelsCount,
+        setVoiceChannelsCount
     }
     return (
         <LocalContext.Provider value={values}>
