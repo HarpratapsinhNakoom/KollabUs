@@ -54,3 +54,37 @@ function authed() {
       		return request.auth.uid == data.userId
       }
       allow read: if authed() && matchesUser(resource.data)
+
+##########################################################################
+api call to add new voice channel
+
+import { doc, updateDoc } from "firebase/firestore";
+
+const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
+//const newChannel = {
+    channelId : newId,
+    channelName : newName
+}
+
+await updateDoc(spaceRef, {
+  voiceChannels: arrayUnion(newChannel)
+});
+
+###########################################################################
+api call to display voice channels available
+
+React.useEffect(() => {
+        
+        async function getChannels() {
+            try{
+                const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
+                const spaceSnap = await getDoc(spaceRef);
+                
+                setCurrentVoiceChannels(spaceSnap.data().voiceChannels);
+            } catch(err) {
+                console.log(err);
+            }
+        }
+
+        getData();
+    }, [currentUser, voiceChannelsCount, selectedSpace]);

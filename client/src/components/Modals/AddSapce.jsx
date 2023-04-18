@@ -26,8 +26,11 @@ const AddSapce = () => {
     const handleCreate = async () => {
       setLoading(true);
       try {
-        console.log(currentUser.uid);
         const rootFolderId = uuidv4();
+        // const defaultVoiceChannel = {
+        //   channelId : uuidv4(),
+        //   channelName : "General"
+        // }
         await setDoc(doc(firebase_db, "workspaces", roomCode), {
           name: roomName,
           description: desc,
