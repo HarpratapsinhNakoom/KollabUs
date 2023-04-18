@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CreateVoiceModal.module.css";
 import InputBox from "../InputBox/InputBox";
+import { useLocalContext } from "../../context/context";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
+import { firebase_db } from "../../firebase";
+
 // import TextInput from "../shared/TextInput/TextInput";
 // import { createRoom as create } from "../../http";
 // import { useHistory } from "react-router-dom";
 const CreateVoiceModal = ({ onClose }) => {
   //   const history = useHistory();
-
+  const {selectedSpace, setVoiceChannelsCount} = useLocalContext();
   const [voiceName, setVoiceName] = useState("");
 
   async function createRoom() {
-    // try {
-    //   if (!topic) return;
-    //   const { data } = await create({ topic, roomType });
-    //   history.push(`/room/${data.id}`);
-    // } catch (err) {
-    //   console.log(err.message);
-    // }
-    console.log(voiceName);
+    try {
+      const newChannel = {
+        channelId: uuidv4(),
+        channelName: voiceName
+      }
+      const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
+      await updateDoc(spaceRef, {
+        voiceChannels: arrayUnion(newChannel)
+      });
+
+      setVoiceChannelsCount(prev => prev + 1);
+    }
+    catch(err) {
+      console.log(err);
+    }
   }
 
   // useEffect(() => {
