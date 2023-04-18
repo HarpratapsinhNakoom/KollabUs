@@ -6,7 +6,7 @@ import { firebase_db } from '../../firebase';
 import { useAuth } from '../../context/AuthContext';
 
 const JoinSpace = () => {
-    const {joinSpace, setJoinSpace} = useLocalContext();
+    const {joinSpace, setJoinSpace, setWorkSpaceCount} = useLocalContext();
     const [roomCode, setRoomCode] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [message, setMessage] = React.useState("");
@@ -41,6 +41,7 @@ const JoinSpace = () => {
                     await updateDoc(spaceRef, {
                         users: arrayUnion(currentUser.uid)
                     });
+                    setWorkSpaceCount(prev => prev + 1);
                 }
             }else {
                 setMessage("Looks like the code you entered does'nt belongs to any WorkSpace");

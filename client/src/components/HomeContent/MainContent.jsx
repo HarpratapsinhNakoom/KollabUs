@@ -5,11 +5,13 @@ import Worksapce from './WorkSpace/Worksapce'
 import { doc, getDoc } from 'firebase/firestore';
 import { firebase_db } from '../../firebase';
 import { useAuth } from '../../context/AuthContext';
+import { useLocalContext } from '../../context/context';
 
 const MainContent = () => {
   const [workspaces, setWorkspaces] = React.useState([{}]);
 
     const {currentUser} = useAuth();
+    const {workSpaceCount} = useLocalContext();
     React.useEffect(() => {
         
         async function getData() {
@@ -41,7 +43,7 @@ const MainContent = () => {
         }
 
         getData();
-    }, [currentUser]);
+    }, [currentUser, workSpaceCount]);
   return (
     <Grid container
           gap={"20px"}

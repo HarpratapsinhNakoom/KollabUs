@@ -8,7 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const AddSapce = () => {
     const {currentUser} = useAuth();
-    const {createSpace, setCreateSpace} = useLocalContext();
+    const {createSpace, setCreateSpace, setWorkSpaceCount} = useLocalContext();
     const handleClose = () => setCreateSpace(false);
 
     const [loading, setLoading] = React.useState(false);
@@ -52,7 +52,7 @@ const AddSapce = () => {
             workspaces: arrayUnion(roomCode)
         });
 
-
+        setWorkSpaceCount(prev => prev + 1);
         setRoomCode("");
         setRoomName("");
         setDesc("");

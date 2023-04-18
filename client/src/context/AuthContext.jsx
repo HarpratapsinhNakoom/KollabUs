@@ -12,7 +12,7 @@ export function useAuth(){
 export function AuthProvider ({children}){
     const [currentUser,setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true)
-    const { setSelectedSpace, setCurrentRootFolder } = useLocalContext();
+    const { setSelectedSpace, setCurrentRootFolder, setWorkSpaceCount } = useLocalContext();
 
     function signup(email,password){
         return createUserWithEmailAndPassword(auth, email,password)
@@ -27,6 +27,7 @@ export function AuthProvider ({children}){
             setCurrentUser(null);
             setCurrentRootFolder("");
             setSelectedSpace({});
+            setWorkSpaceCount(0);
         })
     }
 
