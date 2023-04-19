@@ -8,7 +8,8 @@ import { useLocalContext } from "../context/context";
 const ACTIONS = {
     SELECT_FOLDER: 'select-folder',
     UPDATE_FOLDER:' update-folder',
-    SET_CHILD_FOLDER: 'set-child-folder'
+    SET_CHILD_FOLDER: 'set-child-folder',
+    SET_CHILD_FILES:'set-child-files',
 };
 
 function reducer(state, {type, payload}) {
@@ -29,6 +30,11 @@ function reducer(state, {type, payload}) {
             return {
                 ...state,
                 childFolders: payload.childFolders
+            }
+        case ACTIONS.SET_CHILD_FILES:
+            return{
+                ...state,
+                childFiles:payload.childFiles,
             }
         default:
             return state;
@@ -114,5 +120,20 @@ export function useFolder(folderId = null, folder = null) {
     //         })
     //     })
     }, [folderId, currentUser])
+
+    useEffect(()=>{
+        const fileRef=collection(firebase_db,"files")
+        const q=query(fileRef,where("folderId","==",folderId),where("userId","==",currentUser.uid));
+        return onSnapshot(q,(snapshot)=>{
+            dispatch({
+                type:ACTIONS.SET_CHILD_FILES,
+                payload:{childFiles:snapshot.docs.map(formattedDoc)}
+                
+            })
+        })
+
+    },[folderId,currentUser])
+
+
     return state;
 }

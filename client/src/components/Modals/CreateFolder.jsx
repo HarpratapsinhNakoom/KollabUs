@@ -39,7 +39,8 @@ const AddSapce = ({currentFolder}) => {
           parentId: currentFolder.id,     // id of its parent folder
           userId: currentUser.uid,   //who created this folder
           path: current_Folder_Path,    //path of folders till this folder
-          createdAt:getCurrentTimeStamp  //time when it was created
+          createdAt:getCurrentTimeStamp, //time when it was created
+          childFiles:[],
         });
 
         // const userRef = doc(firebase_db, "users", currentUser.uid);
