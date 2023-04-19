@@ -47,9 +47,16 @@ const MainContent = () => {
   return (
     <Grid container
           gap={"20px"}
-          m={"20px"}
-          height="calc(100% - 100px)">
-          <Grid item md={2.5}>
+          p={"10px"}
+          height="calc(100% - 80px)">
+          <Grid item md={2.5}
+          sx={{
+            backgroundColor:"white",
+            borderRadius:"10px",
+            WebkitBoxShadow: "0px 0px 8px 3px #B0A9A8",
+            MozBoxShadow: "0px 0px 8px 3px #B0A9A8",
+            boxShadow: "0px 0px 8px 3px #B0A9A8",           
+          }}>
               <Sidebar workspaces={workspaces}/>
           </Grid>
           <Grid item md={8.5}

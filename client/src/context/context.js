@@ -10,6 +10,7 @@ export function ContextProvider({children}) {
     const [createSpace, setCreateSpace] = React.useState(false);
     const [joinSpace, setJoinSpace] = React.useState(false);
     const [createFolder, setCreateFolder] = React.useState(false);
+    const [createFile, setCreateFile] = React.useState(false);
     const [selectedSpace, setSelectedSpace] = React.useState({});
     const [currentRootFolder, setCurrentRootFolder] = React.useState("");
     const [workSpaceCount, setWorkSpaceCount] = React.useState(0);
@@ -23,6 +24,8 @@ export function ContextProvider({children}) {
         setJoinSpace,
         createFolder,
         setCreateFolder,
+        createFile,
+        setCreateFile,
         selectedSpace,
         setSelectedSpace,
         currentRootFolder,

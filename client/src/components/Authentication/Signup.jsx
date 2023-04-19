@@ -35,7 +35,7 @@ const Signup = () => {
         passwordRef.current.value,
         nameRef.current.value
       );
-      console.log(res.user.uid);
+      console.log("here ", res.user);
       await setDoc(doc(firebase_db, "users", res.user.uid), {
         name: nameRef.current.value,
         email: emailRef.current.value,

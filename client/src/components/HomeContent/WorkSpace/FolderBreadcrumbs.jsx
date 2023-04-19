@@ -18,6 +18,7 @@ const FolderBreadcrumbs = ({currentFolder}) => {
     return (
       <Link
         underline="hover"
+        fontSize="24px"
         key={index}
         color="inherit"
         onClick={() => {
@@ -50,9 +51,13 @@ const FolderBreadcrumbs = ({currentFolder}) => {
       <Breadcrumbs
         separator={<ArrowForwardIosIcon />}
         aria-label="breadcrumb"
+        sx={{
+          mt:"25px",
+          mb:"20px"
+        }}
       >
         {showBreadcrumbs}
-        <Typography key="3" color="text.primary">
+        <Typography key="3" color="text.primary" fontSize="24px">
             {currentFolder && currentFolder.name}
         </Typography>
       </Breadcrumbs>
