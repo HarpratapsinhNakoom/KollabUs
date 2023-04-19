@@ -26,7 +26,10 @@ export function AuthProvider({ children }) {
   async function signup(email, password, name) {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await updateProfile(user, { displayName: name });
+    await updateProfile(user, {
+      displayName: name,
+      photoURL: `https://api.dicebear.com/6.x/initials/svg?seed=${name}`,
+    });
     return res;
   }
 

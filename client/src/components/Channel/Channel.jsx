@@ -55,7 +55,7 @@ const Channel = ({ channelId: roomId, user }) => {
             <div className={styles.clientBarWrap}>
               <img
                 className={styles.clientAvatar}
-                src={client.avatar}
+                src={client.photoURL}
                 alt="avatar"
               />
               <audio
