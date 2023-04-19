@@ -77,6 +77,7 @@ const Sidebar = ({ user }) => {
 
   return (
     <div id="myMask" className={styles.modalMask}>
+    {/* // <div id="myMask" className={styles.hideSidebar}> */}
       <div id="mySidebar" className={styles.sidebarWrapper}>
         {/* <div className={styles.textsWrapper}>
         <h2 className={styles.textsHeader}>TEXT CHANNELS</h2>
