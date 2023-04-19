@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import{Button,Modal,Form} from "react-bootstrap"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import { faFilePlus } from '@fortawesome/free-solid-svg-icons'
-import {setDoc,serverTimestamp,collection, arrayUnion, doc} from "firebase/firestore"
+import {setDoc,serverTimestamp, arrayUnion, doc, updateDoc} from "firebase/firestore"
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth } from '../../../context/AuthContext';
 import { firebase_db } from '../../../firebase'
@@ -40,7 +40,7 @@ export default function AddFileButton({currentFolder}) {
           createdAt:serverTimestamp()  //time when it was created
         });
 
-        await setDoc(doc(firebase_db,"folders",currentFolder.id),{
+        await updateDoc(doc(firebase_db,"folders",currentFolder.id),{
             childFiles:arrayUnion(fileId)
         })
 

@@ -123,7 +123,7 @@ export function useFolder(folderId = null, folder = null) {
 
     useEffect(()=>{
         const fileRef=collection(firebase_db,"files")
-        const q=query(fileRef,where("folderId","==",folderId),where("userId","==",currentUser.uid));
+        const q=query(fileRef,where("parentId","==",folderId))
         return onSnapshot(q,(snapshot)=>{
             dispatch({
                 type:ACTIONS.SET_CHILD_FILES,

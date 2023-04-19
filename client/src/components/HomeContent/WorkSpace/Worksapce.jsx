@@ -117,11 +117,7 @@ const Worksapce = () => {
                 </div>
 
                 )}
-
-
-                  
-                </Grid>                
-
+                </Grid>
             </Box>
           <CreateFolder currentFolder={folder} />
           <Sidebar user={currentUser} />
