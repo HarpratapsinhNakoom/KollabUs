@@ -9,6 +9,8 @@ import Signup from "./components/Authentication/Signup";
 import UpdateProfile from "./components/Authentication/UpdateProfile";
 import ValidAuth from "./components/Authentication/ValidAuth";
 import "./App.css";
+import Document from "./pages/FileView/FileView";
+
 
 function App() {
   return (
@@ -40,6 +42,15 @@ function App() {
             element={
               <PrivateRoutes>
                 <HomePage />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/document/:fileId"
+            element={
+              <PrivateRoutes>
+                <Document />
               </PrivateRoutes>
             }
           />

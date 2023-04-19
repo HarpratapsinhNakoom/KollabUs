@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Document.module.css";
+import styles from "./FileView.module.css";
 import { useParams } from "react-router-dom";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import Canvas from "../../components/Canvas/Canvas";
