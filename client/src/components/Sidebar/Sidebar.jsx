@@ -24,31 +24,30 @@ const isCreator = true;
 // ];
 
 const Sidebar = ({ user }) => {
-  const {selectedSpace,
+  const {
+    selectedSpace,
     currentVoiceChannels,
     setCurrentVoiceChannels,
-    voiceChannelsCount} = useLocalContext();
-  const {currentUser} = useAuth();
+    voiceChannelsCount,
+  } = useLocalContext();
+  const { currentUser } = useAuth();
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
-
   useEffect(() => {
-    
     async function getChannels() {
-        try{
-            const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
-            const spaceSnap = await getDoc(spaceRef);
-            
-            setCurrentVoiceChannels(spaceSnap.data().voiceChannels);
-        } catch(err) {
-            console.log(err);
-        }
+      try {
+        const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
+        const spaceSnap = await getDoc(spaceRef);
+
+        setCurrentVoiceChannels(spaceSnap.data().voiceChannels);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  
+
     getChannels();
   }, [currentUser, voiceChannelsCount, selectedSpace]);
-
 
   function onClose() {
     setCreateModalOpen(false);
@@ -76,9 +75,11 @@ const Sidebar = ({ user }) => {
   // }, []);
 
   return (
-    <div id="myMask" className={styles.modalMask}>
-    {/* // <div id="myMask" className={styles.hideSidebar}> */}
-      <div id="mySidebar" className={styles.sidebarWrapper}>
+    <div id="myMask">
+      <div
+        id="mySidebar"
+        className={`${styles.sidebarWrapper} ${styles.hideSidebar}`}
+      >
         {/* <div className={styles.textsWrapper}>
         <h2 className={styles.textsHeader}>TEXT CHANNELS</h2>
       </div> */}
