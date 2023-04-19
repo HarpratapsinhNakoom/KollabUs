@@ -97,18 +97,20 @@ const Worksapce = () => {
                 <Button variant="outlined" onClick={showSidebar}>
                     <KeyboardVoiceOutlinedIcon />
                 </Button>
-                <FolderBreadcrumbs currentFolder={folder}/>
-                <Grid container spacing={3}>
+                <Box m={"15px 0"}>
+                    <FolderBreadcrumbs currentFolder={folder}/>
+                </Box>
+                <Grid container spacing={3} direction="column">
                 {childFolders.length > 0 && 
                         childFolders.map((childFolder, index) => {
                             return (<FolderItem key={index} folder={childFolder}/>)
                         })
-                }  
+                }
 
                 {childFolders.length>0 && childFiles.length>0 && <hr />}
         
                 {childFiles.length>0 && (
-                <div className="d-flex flex-wrap">
+                <div className="d-flex flex-wrap m-2">
                     {childFiles.map(Childfile=>(
                     <div key={Childfile.id} style={{maxWidth:'250px'}} className="p-2">
                         <FileItem file={Childfile} />
