@@ -6,6 +6,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { useLocalContext } from "./context";
 import { doc, getDoc } from "firebase/firestore";
@@ -22,8 +23,11 @@ export function AuthProvider({ children }) {
   const { setSelectedSpace, setCurrentRootFolder, setWorkSpaceCount } =
     useLocalContext();
 
-  function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  async function signup(email, password, name) {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await updateProfile(user, { displayName: name });
+    return res;
   }
 
   function login(email, password) {
@@ -56,11 +60,11 @@ export function AuthProvider({ children }) {
         user.name = userSnap.data().name;
         user.id = user.uid;
         user.avatar = `https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`;
-        setCurrentUser(user);
-        setLoading(false);
       } catch (error) {
         console.log(error);
       }
+      setCurrentUser(user);
+      setLoading(false);
     });
 
     return unsubscribe;

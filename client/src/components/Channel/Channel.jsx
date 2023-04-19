@@ -65,7 +65,7 @@ const Channel = ({ channelId: roomId, user }) => {
                 }}
                 className={styles.audioPlayer}
               />
-              <span>{client.name}</span>
+              <span>{client.displayName}</span>
             </div>
             <button
               onClick={() => handleMuteClick(client.id)}
