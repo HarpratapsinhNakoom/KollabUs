@@ -23,13 +23,6 @@ const Worksapce = () => {
     const {state = {}} = useLocation()
     const {folder, childFolders,childFiles} = useFolder(folderId? folderId : currentRootFolder,state?  state.folder : null);
     
-    function showSidebar() {
-        const element = document.getElementById("mySidebar");
-        element.classList.remove(sidebarStyles.hideSidebar);
-        const mask = document.getElementById("myMask");
-        // console.log(mask);
-        mask.classList.add(sidebarStyles.modalMask);
-    }
   function showSidebar() {
     const element = document.getElementById("mySidebar");
     element.classList.remove(sidebarStyles.hideSidebar);
@@ -75,7 +68,7 @@ const Worksapce = () => {
   return (
     <>
         {selectedSpace.code ?
-            <Box
+            (<Box
             height="100%">
             <Box style={headerBox}>
                 <Box style={spaceHeading}>
@@ -130,25 +123,14 @@ const Worksapce = () => {
                 </Grid>                
 
             </Box>
-          </Box>
-          <Box style={folderSection}>
-            <Button variant="outlined" onClick={showSidebar}>
-              <KeyboardVoiceOutlinedIcon />
-            </Button>
-            <FolderBreadcrumbs currentFolder={folder} />
-            <Grid container spacing={3}>
-              {childFolders.length > 0 &&
-                childFolders.map((childFolder, index) => {
-                  return <FolderItem key={index} folder={childFolder} />;
-                })}
-            </Grid>
-          </Box>
           <CreateFolder currentFolder={folder} />
           <Sidebar user={currentUser} />
         </Box>
-      ) : (
-        <h1>Select a space</h1>
-      )}
+      ) : (<>
+        <h1>Select a space</h1></>
+      )
+      }
+      
     </>
   );
 };
