@@ -11,23 +11,23 @@ import { firebase_db } from "../../firebase";
 // import { useHistory } from "react-router-dom";
 const CreateVoiceModal = ({ onClose }) => {
   //   const history = useHistory();
-  const {selectedSpace, setVoiceChannelsCount} = useLocalContext();
+  const { selectedSpace, setVoiceChannelsCount } = useLocalContext();
   const [voiceName, setVoiceName] = useState("");
 
   async function createRoom() {
     try {
       const newChannel = {
         channelId: uuidv4(),
-        channelName: voiceName
-      }
+        channelName: voiceName,
+      };
       const spaceRef = doc(firebase_db, "workspaces", selectedSpace.code);
       await updateDoc(spaceRef, {
-        voiceChannels: arrayUnion(newChannel)
+        voiceChannels: arrayUnion(newChannel),
       });
 
-      setVoiceChannelsCount(prev => prev + 1);
-    }
-    catch(err) {
+      setVoiceChannelsCount((prev) => prev + 1);
+      onClose();
+    } catch (err) {
       console.log(err);
     }
   }
