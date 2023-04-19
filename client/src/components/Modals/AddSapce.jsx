@@ -46,7 +46,8 @@ const AddSapce = () => {
           parentId: null,     // id of its parent folder
           userId: currentUser.uid,   //who created this folder
           path: [],    //path of folders till this folder
-          createdAt:getCurrentTimeStamp  //time when it was created
+          createdAt:getCurrentTimeStamp,  //time when it was created
+          childFiles: []
         });
 
 
