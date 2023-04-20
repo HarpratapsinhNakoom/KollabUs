@@ -11,7 +11,6 @@ import ValidAuth from "./components/Authentication/ValidAuth";
 import "./App.css";
 import Document from "./pages/FileView/FileView";
 
-
 function App() {
   return (
     <Router>

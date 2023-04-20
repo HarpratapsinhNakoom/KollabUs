@@ -44,3 +44,10 @@ html {
     font-family: 'Nunito', sans-serif;
     /* color: #fff; */
   }
+
+  .myButton {
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
