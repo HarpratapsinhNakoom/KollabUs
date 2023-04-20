@@ -145,11 +145,11 @@ const Sidebar = ({ user }) => {
             <div className={styles.profile}>
               <img
                 className={styles.userImage}
-                src={user.avatar}
+                src={user.photoURL}
                 alt="avatar"
               />
               <div className={styles.currentInfo}>
-                <span className={styles.userName}>{user.name}</span>
+                <span className={styles.userName}>{user.displayName}</span>
                 {selectedChannel && (
                   <span className={styles.channelName}>
                     {selectedChannel.channelName}

@@ -57,15 +57,6 @@ export function AuthProvider({ children }) {
   }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      try {
-        const userRef = doc(firebase_db, "users", user?.uid);
-        const userSnap = await getDoc(userRef);
-        user.name = userSnap?.data().name;
-        user.id = user?.uid;
-        user.avatar = `https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`;
-      } catch (error) {
-        console.log(error);
-      }
       setCurrentUser(user);
       setLoading(false);
     });
