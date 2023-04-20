@@ -17,28 +17,27 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (password !== passwordConfirm) {
       return setError("Passwords do not match");
     }
 
     try {
       setError("");
       setLoading(true);
-      const res = await signup(
-        emailRef.current.value,
-        passwordRef.current.value,
-        nameRef.current.value
-      );
+      const res = await signup(email, password, name);
       console.log("here ", res.user);
       await setDoc(doc(firebase_db, "users", res.user.uid), {
-        name: nameRef.current.value,
-        email: emailRef.current.value,
+        name,
+        email,
         workspaces: [],
       });
       navigate("/");
@@ -67,7 +66,12 @@ const Signup = () => {
 
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required></Form.Control>
+              <Form.Control
+                type="email"
+                ref={emailRef}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              ></Form.Control>
             </Form.Group>
 
             <Form.Group id="password">
@@ -75,15 +79,17 @@ const Signup = () => {
               <Form.Control
                 type="password"
                 ref={passwordRef}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               ></Form.Control>
             </Form.Group>
 
             <Form.Group id="password-conform">
-              <Form.Label>Password Conformation</Form.Label>
+              <Form.Label>Password Confirmation</Form.Label>
               <Form.Control
                 type="password"
                 ref={passwordConfirmRef}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
                 required
               ></Form.Control>
             </Form.Group>
