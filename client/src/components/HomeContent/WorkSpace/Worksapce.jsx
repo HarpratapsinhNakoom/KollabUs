@@ -1,7 +1,5 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from '@mui/material'
 import React from 'react'
-import AddFolder from './AddFolderButton';
-import AddFileButton from './AddFileButton';
 import { useLocalContext } from '../../../context/context';
 import { useFolder } from '../../../hooks/useFolder';
 // import bgSvg from '../../../assets/images/headerbg.svg'
@@ -15,10 +13,16 @@ import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined
 import Sidebar from '../../Sidebar/Sidebar';
 import sidebarStyles from '../../Sidebar/Sidebar.module.css'
 import { useAuth } from '../../../context/AuthContext';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import CreateFile from '../../Modals/CreateFile';
 
 const Worksapce = () => {
     const {folderId} = useParams();
-    const {selectedSpace, currentRootFolder} = useLocalContext()
+    const {selectedSpace,
+      currentRootFolder,
+      setCreateFolder,
+      setCreateFile} = useLocalContext()
     const {currentUser} = useAuth()
     const {state = {}} = useLocation()
     const {folder, childFolders,childFiles} = useFolder(folderId? folderId : currentRootFolder,state?  state.folder : null);
@@ -30,6 +34,10 @@ const Worksapce = () => {
     // console.log(mask);
     mask.classList.add(sidebarStyles.modalMask);
   }
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const headerBox = {
     margin: "20px 10px",
@@ -52,15 +60,13 @@ const Worksapce = () => {
 
   const subHeader = {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     justifyContent: "space-between",
   };
   const spaceDescription = {
     // border:"1px solid black",
     margin: "20px 10px",
-  };
-  const newButton = {
-    // border:"1px solid black"
   };
   const folderSection = {
     margin: "20px 10px 40px 10px",
@@ -85,27 +91,23 @@ const Worksapce = () => {
                     <Box style={spaceDescription}>
                         CODE : {selectedSpace.code}
                     </Box>
-                    <Box style={newButton}>
-                        <AddFolder/>
-                    </Box>
-                    <Box style={newButton}>
-                        <AddFileButton currentFolder={folder}/>
-                    </Box>
+                    <Button variant="outlined" onClick={showSidebar}>
+                        <KeyboardVoiceOutlinedIcon /> Join Voice Channel
+                    </Button>
                 </Box>
             </Box>
             <Box style={folderSection}>
-                <Button variant="outlined" onClick={showSidebar}>
-                    <KeyboardVoiceOutlinedIcon />
-                </Button>
                 <Box m={"15px 0"}>
                     <FolderBreadcrumbs currentFolder={folder}/>
                 </Box>
                 <Grid container spacing={3} direction="column">
-                {childFolders.length > 0 && 
-                        childFolders.map((childFolder, index) => {
-                            return (<FolderItem key={index} folder={childFolder}/>)
-                        })
-                }
+                  <Grid item container spacing={3}>
+                      {childFolders.length > 0 && 
+                              childFolders.map((childFolder, index) => {
+                                  return (<FolderItem key={index} folder={childFolder}/>)
+                              })
+                      }
+                  </Grid>
 
                 {childFolders.length>0 && childFiles.length>0 && <hr />}
         
@@ -120,9 +122,29 @@ const Worksapce = () => {
 
                 )}
                 </Grid>
+                <SpeedDial
+                    ariaLabel="SpeedDial controlled open example"
+                    sx={{ position: 'absolute', bottom: 30, right: 30 }}
+                    icon={<SpeedDialIcon />}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    open={open}
+                  >
+                    <SpeedDialAction
+                      icon={<CreateNewFolderIcon/>}
+                      tooltipTitle={"Add Folder"}
+                      onClick={() => setCreateFolder(true)}
+                    />
+                    <SpeedDialAction
+                      icon={<InsertDriveFileIcon/>}
+                      tooltipTitle={"Add File"}
+                      onClick={() => setCreateFile(true)}
+                    />
+                  </SpeedDial>
             </Box>
           <CreateFolder currentFolder={folder} />
           <Sidebar user={currentUser} />
+          <CreateFile currentFolder = {folder} />
         </Box>
       ) : (<>
         <h1>Select a space</h1></>

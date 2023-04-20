@@ -1,25 +1,19 @@
 import React,{useState} from 'react'
 import{Button,Modal,Form} from "react-bootstrap"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import { faFilePlus } from '@fortawesome/free-solid-svg-icons'
 import {setDoc,serverTimestamp, arrayUnion, doc, updateDoc} from "firebase/firestore"
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useAuth } from '../../../context/AuthContext';
-import { firebase_db } from '../../../firebase'
+import { firebase_db } from '../../firebase'
 import {v4 as uuidV4} from "uuid"
+import { useLocalContext } from '../../context/context';
 
 
 
-export default function AddFileButton({currentFolder}) {
-    const [open,setOpen]=useState(false);
+export default function CreateFile({currentFolder}) {
+    const {createFile, setCreateFile} = useLocalContext()
     const[name,setName]=useState('');
-    const {currentUser}=useAuth();
 
-    function openModal(){
-        setOpen(true)
-    }
     function closeModal(){
-        setOpen(false)
+        setCreateFile(false)
     }
     async function handleSubmit(e){
         e.preventDefault();
@@ -56,10 +50,7 @@ export default function AddFileButton({currentFolder}) {
     }
   return (
     <>
-        <Button onClick={openModal} variant="outline-success" size="sm">
-            <FontAwesomeIcon icon="fa-thin fa-file-arrow-up" />
-        </Button> 
-        <Modal show={open} onHide={closeModal}>
+        <Modal show={createFile} onHide={closeModal}>
             <Form onSubmit={handleSubmit}>
                 <Modal.Body>
                     <Form.Group>
