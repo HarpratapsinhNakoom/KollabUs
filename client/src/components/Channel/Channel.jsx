@@ -35,13 +35,13 @@ const Channel = ({ channelId: roomId, user }) => {
 
   // keep watching for mute changes of current client.
   useEffect(() => {
-    handleMute(isMuted, user.id);
+    handleMute(isMuted, user.uid);
   }, [isMuted]);
 
   // handle click on mute toggle by user.
   const handleMuteClick = (clientId) => {
     console.log("click");
-    if (clientId !== user.id) {
+    if (clientId !== user.uid) {
       return;
     }
     setMuted((prev) => !prev);
@@ -51,7 +51,7 @@ const Channel = ({ channelId: roomId, user }) => {
     <div className={styles.clientsList}>
       {clients.map((client) => {
         return (
-          <div key={client.id} className={styles.clientBar}>
+          <div key={client.uid} className={styles.clientBar}>
             <div className={styles.clientBarWrap}>
               <img
                 className={styles.clientAvatar}
@@ -61,14 +61,14 @@ const Channel = ({ channelId: roomId, user }) => {
               <audio
                 autoPlay
                 ref={(instance) => {
-                  provideRef(instance, client.id);
+                  provideRef(instance, client.uid);
                 }}
                 className={styles.audioPlayer}
               />
               <span>{client.displayName}</span>
             </div>
             <button
-              onClick={() => handleMuteClick(client.id)}
+              onClick={() => handleMuteClick(client.uid)}
               className={styles.micBtn}
             >
               {client.muted ? (
