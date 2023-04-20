@@ -16,7 +16,7 @@ function useWebRTC(roomId, user) {
   // add new client function which is custom made for getting a callback after execution.
   const addNewClient = useCallback(
     (newClient, cb) => {
-      const lookingFor = clients.find((client) => client.id === newClient.id);
+      const lookingFor = clients.find((client) => client.uid === newClient.uid);
       if (lookingFor) return;
       setClients((existingClients) => [...existingClients, newClient], cb);
     },
@@ -42,7 +42,7 @@ function useWebRTC(roomId, user) {
 
       // Add myself to clients state and setup HTML with content of localMediaStream.
       addNewClient({ ...user, muted: true }, () => {
-        const localElement = audioElements.current[user.id];
+        const localElement = audioElements.current[user.uid];
         if (!localElement) return;
         localElement.volume = 0;
         localElement.srcObject = localMediaStream.current;
@@ -96,22 +96,23 @@ function useWebRTC(roomId, user) {
           addNewClient({ ...remoteUser, muted: true }, () => {
             // get current users mute info
             const currentUser = clientsRef.current.find(
-              (client) => client.id === user.id
+              (client) => client.uid === user.uid
             );
             if (currentUser) {
               socket.current.emit(ACTIONS.MUTE_INFO, {
-                userId: user.id,
+                userId: user.uid,
                 roomId,
                 isMute: currentUser.muted,
               });
             }
-            if (audioElements.current[remoteUser.id]) {
-              audioElements.current[remoteUser.id].srcObject = remoteStream;
+            if (audioElements.current[remoteUser.uid]) {
+              audioElements.current[remoteUser.uid].srcObject = remoteStream;
             } else {
               let settled = false;
               const interval = setInterval(() => {
-                if (audioElements.current[remoteUser.id]) {
-                  audioElements.current[remoteUser.id].srcObject = remoteStream;
+                if (audioElements.current[remoteUser.uid]) {
+                  audioElements.current[remoteUser.uid].srcObject =
+                    remoteStream;
                   settled = true;
                 }
 
@@ -175,7 +176,7 @@ function useWebRTC(roomId, user) {
 
         delete connections.current[peerId];
         delete audioElements.current[peerId];
-        setClients((list) => list.filter((c) => c.id !== userId));
+        setClients((list) => list.filter((c) => c.uid !== userId));
       }
 
       // Send ice to server for letting the new user connect.
@@ -189,7 +190,7 @@ function useWebRTC(roomId, user) {
       // Handle muting of any clients for UI and state change of clients using ref.
       async function handleSetMute(mute, userId) {
         const clientIdx = clientsRef.current
-          .map((client) => client.id)
+          .map((client) => client.uid)
           .indexOf(userId);
         const allConnectedClients = JSON.parse(
           JSON.stringify(clientsRef.current)
@@ -252,9 +253,9 @@ function useWebRTC(roomId, user) {
 
   // EXPORT FUNCTION - HANDLE_MUTE
   // set state of mute to isMute the new mute state of userId.
-  // Many redundant checks of userId!==user.id.
+  // Many redundant checks of userId!==user.uid.
   const handleMute = (isMute, userId) => {
-    if (userId !== user.id) return;
+    if (userId !== user.uid) return;
     let settled = false;
 
     // Try to do operation every 0.2s (to handle the lags).
@@ -267,12 +268,12 @@ function useWebRTC(roomId, user) {
         if (isMute) {
           socket.current.emit(ACTIONS.MUTE, {
             roomId,
-            userId: user.id,
+            userId: user.uid,
           });
         } else {
           socket.current.emit(ACTIONS.UNMUTE, {
             roomId,
-            userId: user.id,
+            userId: user.uid,
           });
         }
 

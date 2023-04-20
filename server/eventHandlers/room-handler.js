@@ -65,12 +65,12 @@ const registerRoomHandler = (io, socket, socketUserMapping) => {
       clients.forEach((clientId) => {
         io.to(clientId).emit(ACTIONS.REMOVE_PEER, {
           peerId: socket.id,
-          userId: socketUserMapping[socket.id]?.id,
+          userId: socketUserMapping[socket.id]?.uid,
         });
 
         socket.emit(ACTIONS.REMOVE_PEER, {
           peerId: clientId,
-          userId: socketUserMapping[clientId]?.id,
+          userId: socketUserMapping[clientId]?.uid,
         });
       });
 
