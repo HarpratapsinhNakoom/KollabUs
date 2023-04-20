@@ -7,7 +7,7 @@ const socketInit = () => {
     timeout: 10000,
     transports: ["websocket"],
   };
-  return io("https://collab-base-trial.onrender.com", options);
+  return io("https://collabus-backend.onrender.com/", options);
 };
 
 export default socketInit;

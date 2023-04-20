@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Canvas.module.css";
 import useCollaborationBoard from "../../hooks/useCollaborationBoard";
-const colors = ["#00FF00", "#0000FF", "#FFFFFF", "#FF0000"];
+const colors = ["#00FF00", "#0000FF", "#000000", "#FF0000"];
 
 const canvasStyle = {
   border: "1px solid black",

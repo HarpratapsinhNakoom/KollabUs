@@ -17,7 +17,7 @@ body {
     padding: 1in;
     margin: 1rem;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-    background-color: #272727;
+    /* background-color: #272727; */
     font-size: 16px;
     border-radius: 10px;
 }
