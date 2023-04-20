@@ -4,4 +4,4 @@
 
 ## Live At
 
-https://cool-kollabus-technosharks.netlify.app/
+https://kollabus-technosharks.netlify.app/
