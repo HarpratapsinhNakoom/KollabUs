@@ -8,6 +8,9 @@ const Profile = () => {
     const [error,setError]=useState('')
     const {currentUser, logout}=useAuth()
     const navigate=useNavigate();
+    function navigateToHome(){
+      navigate('/user');
+    }
     async function handleLogout(){
         setError("");
         try{
@@ -28,10 +31,11 @@ const Profile = () => {
             <strong>Email:</strong> {currentUser.email}
             <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</Link>
         </Card.Body>
-    </Card> 
-     <div className="w-100 text-center mt-2" >
-        <Button variant="link" onClick={handleLogout}>Log Out</Button>
+        <div className="w-100 text-center mt-2" >
+        <p><Button variant="link" onClick={handleLogout}>Log Out</Button> | <Button variant="link" onClick={navigateToHome} >Home</Button> </p>
      </div>
+    </Card> 
+     
     </CenteredContainer>
   )
 }
